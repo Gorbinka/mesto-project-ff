@@ -10,14 +10,14 @@ function likeCard (evt) {
 	evt.target.classList.toggle("card__like-button_is-active");
 };
 
-function createCard (element, deleteCard, likeCard, openCard) {
+function createCard (cardData, deleteCard, likeCard, openCard) {
 	const cardElement = cardTemplate.querySelector('.card').cloneNode(true);
 	const cardImage = cardElement.querySelector(".card__image");
 	const cardDescription = cardElement.querySelector(".card__title");
 
-	cardImage.src = element.link;
-	cardImage.alt = element.name;
-	cardDescription.textContent = element.name;
+	cardImage.src = cardData.link;
+	cardImage.alt = cardData.name;
+	cardDescription.textContent = cardData.name;
 
 	const deleteButton = cardElement.querySelector('.card__delete-button');
 	deleteButton.addEventListener('click', deleteCard);
@@ -26,7 +26,7 @@ function createCard (element, deleteCard, likeCard, openCard) {
 	likeButton.addEventListener('click', likeCard);
 
 	cardImage.addEventListener("click", function() {
-		openCard(element);
+		openCard(cardData);
 	});
 	
 	return cardElement;

@@ -1,13 +1,14 @@
 import { deleteCard, createCard, likeCard} from "./card.js";//Импорт функций создания и удаления карточек
 import { initialCards } from "./cards.js";//Импорт картинок карточек
-import { openModal, closeModal, closeModalWithClick, closeModalWithEsc } from "./modal.js";//Импорт функций закрытия и открытия модальных окон
-import '../pages/index.css';
 
+//import { openModal, closeModal,closeModalWithClick} from "./modal.js";//Импорт функций закрытия и открытия модальных окон
+import { openModal, closeModal, setCloseModalByClickListeners } from "./modal.js";
+import '../pages/index.css';
 export { cardTemplate };
 
 const cardTemplate = document.querySelector('#card-template').content;
 
-const cardList = document.querySelector('.places__list');
+const cardsContainer = document.querySelector('.places__list');
 
 const popups = document.querySelectorAll('.popup');
 
@@ -34,15 +35,20 @@ const formNewPlaceName = formNewPlace.elements["place-name"];
 const formNewPlaceLink = formNewPlace["link"];
 
 //Обработчик закрытия попапов
-popups.forEach(function (popup) {
-	popup.addEventListener("click", closeModalWithClick);
-	popup.addEventListener("click", closeModalWithEsc);
-});
+// popups.forEach(function (popup) {
+// 	popup.addEventListener("click", closeModalWithClick);
+// });
+
+setCloseModalByClickListeners(popups);
+
+function copyInfoProfile() {
+	editProfileNameInput.value = editProfileName.textContent;
+	editProfileDescInput.value = editProfileDesc.textContent;
+}
 
 //Обработчик события редактирования профиля
 buttonEdit.addEventListener("click", () => {
-	editProfileNameInput.value = editProfileName.textContent;
-	editProfileDescInput.value = editProfileDesc.textContent;
+	copyInfoProfile();
 	openModal(popupEdit);
 });
 //Сохранение изменений в профиле
@@ -59,9 +65,9 @@ function handleFormSubmit(evt) {
 
 //Обработчик события добавления новой карточки
 buttonAdd.addEventListener("click", () => {
-	formNewPlace.reset();
 	openModal(popupNewCard);
 });
+
 //Открытие карточки
 function openCard(card) {
 	popupImageSrc.src = card.link;
@@ -76,11 +82,13 @@ formNewPlace.addEventListener("submit", (evt) => {
 		deleteCard,
 		likeCard,
 		openCard);
-	cardList.prepend(newCard);
+		cardsContainer.prepend(newCard);
 	handleFormSubmit(evt);
+	formNewPlace.reset();
 });
 //Добавление карточек при входе на сайт
 initialCards.forEach(function (element) {
-	const template = createCard(element, deleteCard, likeCard, openCard);
-	cardList.append(template);
+	const card = createCard(element, deleteCard, likeCard, openCard);
+	cardsContainer.append(card);
+	
 });
