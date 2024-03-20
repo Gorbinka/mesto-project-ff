@@ -10,6 +10,19 @@
   margin-bottom: 10px;
 }
 
+/* .popup__input_type_error {
+  border-bottom: red;
+} */
+
+/* 
+.popup__input:focus {
+  outline:none;
+}
+
+.popup__input:focus-visible {
+  outline:1px solid #000;
+} */
+
 .popup__input:last-of-type {
   margin-bottom: 0;
 }
@@ -19,4 +32,8 @@
     font-size: 12px;
     line-height: 15px;
   }
+}
+
+.popup__error_visible {
+  color:red;
 }
