@@ -1,5 +1,7 @@
 export { deleteCard, createCard, likeCard };
-import { cardTemplate } from "./index.js";
+
+const cardTemplate = document.querySelector("#card-template").content;
+
 import {addLikeWithServer,
    deleteLikeWithServer,
    deleteCardWithServer 

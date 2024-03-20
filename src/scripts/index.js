@@ -13,8 +13,6 @@ import { getProfileFromServer,
   editAvatarWithServer
 } from "./api.js"
 
-export { cardTemplate };
-
 const validationConfig = {
   formSelector: ".popup__form",
   inputSelector: ".popup__input",
@@ -23,8 +21,6 @@ const validationConfig = {
   inputErrorClass: "popup__input_type_error",
   errorClass: "popup__error_visible",
 };
-
-const cardTemplate = document.querySelector("#card-template").content;
 
 let userId;
 

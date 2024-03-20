@@ -74,8 +74,12 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
 	const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
 	  const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
 	  buttonElement.classList.add(validationConfig.inactiveButtonClass);
+
 	  inputList.forEach((inputElement) => {
 		hideInputError(formElement,inputElement,validationConfig.inputErrorClass,validationConfig.errorClass);
 		inputElement.setCustomValidity("");
 	  });
+
+	  buttonElement.disabled = true;
+	  buttonElement.classList.add(validationConfig.inactiveButtonClass);
   };
