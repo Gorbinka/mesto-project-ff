@@ -1,7 +1,5 @@
 export {enableValidation,clearValidation};
 
-
-
 //Показ ошибки в правильности заполнения формы
 const showInputError = (formElement,inputElement,errorMessage,inputErrorClass,errorClass) => {
 	const errorElement = formElement.querySelector(`.${inputElement.id}-error`);

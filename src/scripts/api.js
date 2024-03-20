@@ -21,6 +21,7 @@ function checkResponse(response) {
 
 export function getProfileFromServer() {
 	return fetch(`${config.baseUrl}/users/me`, {
+		method: "GET",
 		headers:config.headers,
 	})
 	.then(checkResponse);

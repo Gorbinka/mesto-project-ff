@@ -5,22 +5,6 @@ import {addLikeWithServer,
    deleteCardWithServer 
   } from "./api.js"
 
-
-
-
-
-
-//Функция удаления карточки
-// function deleteCard(evt) {
-//   const item = evt.target.closest(".card");
-//   item.remove();
-// }
-//Функция, дающая возможность поставить "лайк"
-// function likeCard(evt) {
-//   evt.target.classList.toggle("card__like-button_is-active");
-// }
-
-
 function createCard(cardData, deleteCard, likeCard, openCard, userId) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
