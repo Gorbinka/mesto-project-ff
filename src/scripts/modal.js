@@ -24,8 +24,8 @@ function closeModalByOverlay(evt) {
 
 function setCloseModalByClickListeners(popups) {
   popups.forEach((popup) => {
-    const button = popup.querySelector(".popup__close");
-    button.addEventListener("click", () => closeModal(popup));
+    const btn = popup.querySelector(".popup__close");
     popup.addEventListener("click", closeModalByOverlay);
+    btn.addEventListener("click", () => closeModal(popup));
   });
 }

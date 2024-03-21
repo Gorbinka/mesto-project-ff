@@ -3,7 +3,7 @@
 // https://mesto.nomoreparties.co/v1/wwf-cohort-8                                  // адрес сервера
 
 const config = {
-	baseUrl: 'https://mesto.nomoreparties.co/v1/wwf-cohort-8',
+	baseUrl: 'https://mesto.nomoreparties.co/v1/wff-cohort-8',
 	headers: {
 	  authorization: 'c5d4f7a1-631c-48ef-91bb-5273f14cc03e',
 	  'Content-Type': 'application/json',
@@ -29,7 +29,6 @@ export function getProfileFromServer() {
 
 export function getInitialCardsFromServer() {
 	return fetch(`${config.baseUrl}/cards`, {
-		method: "GET",
 	  headers: config.headers,
 	})
 	.then(checkResponse);

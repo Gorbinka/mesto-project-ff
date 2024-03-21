@@ -14,6 +14,7 @@
   </header>
   <main class="content">
     <section class="profile page__section">
+      <div class="profile__avatar-edit"></div>
       <div class="profile__image" style="background-image: url('<%=require('./images/avatar.jpg')%>');"></div>
       <div class="profile__info">
         <h1 class="profile__title">Жак-Ив Кусто</h1>
@@ -134,7 +135,10 @@
     <div class="card__description">
       <h2 class="card__title">
       </h2>
+      <div class="card__like-wall">
       <button type="button" class="card__like-button"></button>
+      <span class="card__likes-count"></span>
+      </div>
     </div>
   </li>
 </template>

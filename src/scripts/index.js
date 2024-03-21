@@ -33,15 +33,15 @@ const popupEdit = document.querySelector(".popup_type_edit");
 const popupNewCard = document.querySelector(".popup_type_new-card");
 const buttonAdd = document.querySelector(".profile__add-button");
 const formEditProfile = document.forms["edit-profile"];
-const buttonsClosePopup = document.querySelectorAll(".popup__close");
+const buttonsClosePopup = document.querySelectorAll(".popup");
 const popupImage = document.querySelector(".popup_type_image");
 const formNewPlace = document.forms["new-place"];
-const photoInput = addForm.querySelector(".popup__input_type_url");
-const placeInput = addForm.querySelector(".popup__input_type_card-name");//
+const photoInput =formNewPlace.querySelector(".popup__input_type_url");
+
+const placeInput =  formNewPlace.querySelector(".popup__input_type_card-name");
 const popupImageSrc = popupImage.querySelector(".popup__image");
 const popupImageText = popupImage.querySelector(".popup__caption");
 const cardsContainer = document.querySelector(".places__list");
-
 const avatarPopup = document.querySelector(".popup_type_avatar-edit");
 const avatarForm = document.forms["new-avatar"];
 const openAvatarPopupButton = document.querySelector(".profile__avatar-edit");
@@ -82,7 +82,7 @@ function addNewCard(item, deleteCard, likeCard, userId) {
     userId
   );
 
-  listElement.prepend(newCard);
+  cardsContainer.prepend(newCard);
 }
 
 function openImagePopup(card) {
@@ -103,7 +103,7 @@ function openAvatarPopup() {
     
     evt.submitter.textContent = "Сохранение...";
     
-    editProfileUpdateWithServer({ name: nameInput.value, about: jobInput.value })
+    editProfileUpdateWithServer({ name: nameInput.value, about: descInput.value })
     .then((data) => {
       editProfileName.textContent = data.name;
       editProfileDesc.textContent = data.about;
@@ -152,7 +152,7 @@ function openAvatarPopup() {
   
     createNewCardWithServer({ name: placeInput.value, link: photoInput.value })
       .then((card) => {
-        addNewCard(card,  deleteCard, likeCard, userId);
+        addNewCard(card, deleteCard, likeCard, userId);
   
         closeModal(popupNewCard);
       })
