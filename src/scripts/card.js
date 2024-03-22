@@ -7,7 +7,7 @@ import {addLikeWithServer,
    deleteCardWithServer 
   } from "./api.js"
 
-function createCard(cardData, deleteCard, likeCard, openCard, userId) {
+function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
   const cardImage = cardElement.querySelector(".card__image");
   const cardDescription = cardElement.querySelector(".card__title");

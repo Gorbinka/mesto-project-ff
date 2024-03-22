@@ -85,6 +85,37 @@ function addNewCard(item, deleteCard, likeCard, userId) {
   cardsContainer.prepend(newCard);
 }
 
+function handleFormSubmitEdit(evt) {
+  evt.preventDefault();
+  
+  evt.submitter.textContent = "Сохранение...";
+  
+  editProfileUpdateWithServer({ name: nameInput.value, about: descInput.value })
+  .then((data) => {
+    editProfileName.textContent = data.name;
+    editProfileDesc.textContent = data.about;
+    
+    closeModal(evt.target.closest(".popup"));
+  })
+  .catch(console.error)
+  .finally(() => {
+    evt.submitter.textContent = "Сохранить";
+  });
+}
+
+function openEditPopup() {
+  openModal(popupEdit);
+  clearValidation(formEditProfile, validationConfig);
+
+  nameInput.value = editProfileName.textContent;
+  descInput.value = editProfileDesc.textContent;
+}
+
+function openAddPopup() {
+  openModal(popupNewCard);
+  clearValidation(formNewPlace, validationConfig);
+}
+
 function openImagePopup(card) {
   popupImageSrc.src = card.link;
   popupImageSrc.alt =card.name;
@@ -98,23 +129,6 @@ function openAvatarPopup() {
   clearValidation(avatarForm, validationConfig);
 }
 
-  function handleFormSubmitEdit(evt) {
-    evt.preventDefault();
-    
-    evt.submitter.textContent = "Сохранение...";
-    
-    editProfileUpdateWithServer({ name: nameInput.value, about: descInput.value })
-    .then((data) => {
-      editProfileName.textContent = data.name;
-      editProfileDesc.textContent = data.about;
-      
-      closeModal(evt.target.closest(".popup"));
-    })
-    .catch(console.error)
-    .finally(() => {
-      evt.submitter.textContent = "Сохранить";
-    });
-  }
   
   function handleFormSubmitAvatar(evt) {
     evt.preventDefault();
@@ -133,18 +147,7 @@ function openAvatarPopup() {
     });
   }
   
-  function openEditPopup() {
-    openModal(popupEdit);
-    clearValidation(formEditProfile, validationConfig);
-  
-    nameInput.value = editProfileName.textContent;
-    descInput.value = editProfileDesc.textContent;
-  }
 
-  function openAddPopup() {
-    openModal(popupNewCard);
-    clearValidation(formNewPlace, validationConfig);
-  }
   function handleFormSubmitAdd(evt) {
     evt.preventDefault();
     
@@ -176,3 +179,5 @@ function openAvatarPopup() {
 
   enableValidation(validationConfig);
   setCloseModalByClickListeners(buttonsClosePopup);
+
+  

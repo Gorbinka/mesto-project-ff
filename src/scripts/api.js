@@ -58,8 +58,8 @@ export function createNewCardWithServer(newCard) {
 	.then(checkResponse);
 }
 
-export function deleteCardWithServer(cardID) {
-	return fetch(`${config.baseUrl}/cards/${cardID}`, {
+export function deleteCardWithServer(cardId) {
+	return fetch(`${config.baseUrl}/cards/${cardId}`, {
 		method: "DELETE",
 		headres: config.headers,
 	})
@@ -82,13 +82,13 @@ export function deleteLikeWithServer(cardID) {
 	.then(checkResponse);
 }
 
-export function editAvatarWithServer(photo) {
+export function editAvatarWithServer(avatarUrl) {
 	return fetch(`${config.baseUrl}/users/me/avatar`, {
-		metod: "PATCH",
+		method: "PATCH",
 		headers: config.headers,
-		body : JSON.stringify({
-			avatar:photo,
-		}),
+		body: JSON.stringify({
+			avatar: avatarUrl
+		})
 	})
 	.then(checkResponse);
 }
