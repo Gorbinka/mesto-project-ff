@@ -61,7 +61,7 @@ export function createNewCardWithServer(newCard) {
 export function deleteCardWithServer(cardId) {
 	return fetch(`${config.baseUrl}/cards/${cardId}`, {
 		method: "DELETE",
-		headres: config.headers,
+		headers: config.headers,
 	})
 	.then(checkResponse);
 }
@@ -75,7 +75,7 @@ export function addLikeWithServer(cardID) {
 }
 
 export function deleteLikeWithServer(cardID) {
-	return fetch(`${config.baseUrl}/cards/likes/${cardID}`, {
+	return fetch(`${config.baseUrl}/cards/likes${cardID}`, {
 		method: "DELETE",
 		headers: config.headers,
 	})

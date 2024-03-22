@@ -1,11 +1,11 @@
-export { deleteCard, createCard, likeCard };
-
-const cardTemplate = document.querySelector("#card-template").content;
-
 import {addLikeWithServer,
    deleteLikeWithServer,
    deleteCardWithServer 
   } from "./api.js"
+export { deleteCard, createCard, likeCard };
+
+const cardTemplate = document.querySelector("#card-template").content;
+
 
 function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -22,7 +22,7 @@ function createCard(cardData, openCard, deleteCard, likeCard, userId) {
     deleteButton.style.display = "none";
   }
 
-  deleteButton.addEventListener("click", (event) => deleteCard(event, cardData._id));
+  deleteButton.addEventListener("click", (event) => deleteCard(event, cardData._id));///////////////////////////////////
 
   //deleteButton.addEventListener("click", deleteCard);
 
@@ -56,15 +56,6 @@ function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   return cardElement;
 }
 
-function deleteCard(event, id) {
-  deleteCardWithServer(id)
-    .then(() => {
-      const currentDelete = event.target.closest(".places__item");
-
-      currentDelete.remove();
-    })
-    .catch(console.error);
-}
 
 function likeCard(event, id) {
   const likeButton = event.target;
@@ -72,17 +63,27 @@ function likeCard(event, id) {
   const countLike = event.target.closest(".card").querySelector(".card__likes-count");
   if (isLike) {
     deleteLikeWithServer(id)
-      .then((res) => {
-        likeButton.classList.remove("card__like-button_is-active");
-        countLike.textContent = res.likes.length;
-      })
-      .catch(console.error);
+    .then((res) => {
+      likeButton.classList.remove("card__like-button_is-active");
+      countLike.textContent = res.likes.length;
+    })
+    .catch(console.error);
   } else {
     addLikeWithServer(id)
-      .then((res) => {
-        likeButton.classList.add("card__like-button_is-active");
-        countLike.textContent = res.likes.length;
-      })
-      .catch(console.error);
+    .then((res) => {
+      likeButton.classList.add("card__like-button_is-active");
+      countLike.textContent = res.likes.length;
+    })
+    .catch(console.error);
   }
+}
+
+function deleteCard(event, id) {
+  deleteCardWithServer(id)
+    .then(() => {
+      const currentDelete = event.target.closest(".places__item");
+
+      currentDelete.remove();
+    })
+    .catch(console.error);//////////////////////
 }
