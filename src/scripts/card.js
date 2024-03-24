@@ -1,11 +1,11 @@
-import {addLikeWithServer,
-   deleteLikeWithServer,
-   deleteCardWithServer 
-  } from "./api.js"
+import {
+  addLikeWithServer,
+  deleteLikeWithServer,
+  deleteCardWithServer,
+} from "./api.js";
 export { deleteCard, createCard, likeCard };
 
 const cardTemplate = document.querySelector("#card-template").content;
-
 
 function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   const cardElement = cardTemplate.querySelector(".card").cloneNode(true);
@@ -22,9 +22,9 @@ function createCard(cardData, openCard, deleteCard, likeCard, userId) {
     deleteButton.style.display = "none";
   }
 
-  deleteButton.addEventListener("click", (event) => deleteCard(event, cardData._id));///////////////////////////////////
-
-  //deleteButton.addEventListener("click", deleteCard);
+  deleteButton.addEventListener("click", (event) =>
+    deleteCard(event, cardData._id),
+  );
 
   const likeButton = cardElement.querySelector(".card__like-button");
 
@@ -37,16 +37,9 @@ function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   }
 
   likeButton.addEventListener("click", (event) =>
-  likeCard(event, cardData._id)
+    likeCard(event, cardData._id),
   );
 
-  //likeButton.addEventListener("click", likeCard);
-
-  // cardImage.addEventListener("click", function () {
-  //   openCard(cardData);
-  // });
-
-  
   const showImage = cardElement.querySelector(".card__image");
   showImage.addEventListener("click", () => openCard(cardData));
 
@@ -56,25 +49,26 @@ function createCard(cardData, openCard, deleteCard, likeCard, userId) {
   return cardElement;
 }
 
-
 function likeCard(event, id) {
   const likeButton = event.target;
   const isLike = likeButton.classList.contains("card__like-button_is-active");
-  const countLike = event.target.closest(".card").querySelector(".card__likes-count");
+  const countLike = event.target
+    .closest(".card")
+    .querySelector(".card__likes-count");
   if (isLike) {
     deleteLikeWithServer(id)
-    .then((res) => {
-      likeButton.classList.remove("card__like-button_is-active");
-      countLike.textContent = res.likes.length;
-    })
-    .catch(console.error);
+      .then((res) => {
+        likeButton.classList.remove("card__like-button_is-active");
+        countLike.textContent = res.likes.length;
+      })
+      .catch(console.error);
   } else {
     addLikeWithServer(id)
-    .then((res) => {
-      likeButton.classList.add("card__like-button_is-active");
-      countLike.textContent = res.likes.length;
-    })
-    .catch(console.error);
+      .then((res) => {
+        likeButton.classList.add("card__like-button_is-active");
+        countLike.textContent = res.likes.length;
+      })
+      .catch(console.error);
   }
 }
 
@@ -85,5 +79,5 @@ function deleteCard(event, id) {
 
       currentDelete.remove();
     })
-    .catch(console.error);//////////////////////
+    .catch(console.error);
 }
