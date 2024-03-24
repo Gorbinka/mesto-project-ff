@@ -132,7 +132,7 @@ function openImagePopup(card) {
     openModal(popupEditProfileAva);
     clearValidation(editAvaForm, validationConfig);
   });
-  
+
   function submitAvaForm(evt) {
     evt.preventDefault();
     evt.submitter.textContent = "Сохранение...";
@@ -148,13 +148,7 @@ function openImagePopup(card) {
         evt.submitter.textContent = "Сохранить";
       });
   }
-  
-  buttonAdd.addEventListener("click", () => {
-    formNewPlace.reset();
-    openModal(popupNewCard);
-    clearValidation(formNewPlace, validationConfig);
-  });
-      
+        
     function handleFormSubmitAdd(evt) {
       evt.preventDefault();
       

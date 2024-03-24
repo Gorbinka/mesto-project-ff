@@ -24,10 +24,7 @@ const isValid = (formElement,inputElement,inputErrorClass,errorClass) => {
 	}
 
 	if(!inputElement.validity.valid) {
-		showInputError(formElement,
-      inputElement,
-      inputElement.validationMessage,
-      validationConfig);
+		showInputError(formElement,inputElement,inputElement.validationMessage,inputErrorClass,errorClass);
 	}
 	else {
 		hideInputError(formElement,inputElement,inputErrorClass,errorClass);
@@ -45,7 +42,7 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
     });
   });
   };
-
+//////////////////////////
   const enableValidation = (validationConfig) => {
 	const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 	  formList.forEach((formElement) => {
@@ -60,7 +57,7 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
   const hasInvalidInput = (inputList) => {
 	return inputList.some((inputElement) => {
 		return !inputElement.validity.valid;
-		});
+		})
   };
 
   const toggleButtonState = (inputList, buttonElement, validationConfig) => {
@@ -86,5 +83,3 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
 
 	  buttonElement.classList.add(validationConfig.inactiveButtonClass);
   };
-
- 
