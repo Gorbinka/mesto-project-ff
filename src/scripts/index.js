@@ -35,18 +35,21 @@ const buttonAdd = document.querySelector(".profile__add-button");
 const formEditProfile = document.forms["edit-profile"];
 const buttonsClosePopup = document.querySelectorAll(".popup");
 const popupImage = document.querySelector(".popup_type_image");
+
 const formNewPlace = document.forms["new-place"];
 const photoInput =formNewPlace.querySelector(".popup__input_type_url");
-
 const placeInput =  formNewPlace.querySelector(".popup__input_type_card-name");
 const popupImageSrc = popupImage.querySelector(".popup__image");
 const popupImageText = popupImage.querySelector(".popup__caption");
 const cardsContainer = document.querySelector(".places__list");
-const avatarPopup = document.querySelector(".popup_type_avatar-edit");
-const avatarForm = document.forms["new-avatar"];
-const openAvatarPopupButton = document.querySelector(".profile__avatar-edit");
+
 const avatarImage = document.querySelector(".profile__image");
-const avatarInput = avatarForm.querySelector(".popup__input_type_url");
+
+const popupEditProfileAva = document.querySelector(".popup_type_edit-avatar");
+const editAvaForm = popupEditProfileAva.querySelector(".popup__form");
+const avaFormInput = editAvaForm.querySelector(".popup__input_type_url");
+
+enableValidation(validationConfig);
 
 
 Promise.all([getProfileFromServer(), getInitialCardsFromServer()])
@@ -104,14 +107,14 @@ function handleFormSubmitEdit(evt) {
 }
 
 function openEditPopup() {
-  openModal(popupEdit);
-  clearValidation(formEditProfile, validationConfig);
-
   nameInput.value = editProfileName.textContent;
   descInput.value = editProfileDesc.textContent;
+  openModal(popupEdit);
+  clearValidation(formEditProfile, validationConfig);
 }
 
 function openAddPopup() {
+  formNewPlace.reset();
   openModal(popupNewCard);
   clearValidation(formNewPlace, validationConfig);
 }
@@ -124,60 +127,63 @@ function openImagePopup(card) {
   openModal(popupImage);
 }
 
-function openAvatarPopup() {
-  openModal(avatarPopup);
-  clearValidation(avatarForm, validationConfig);
-}
-
+  avatarImage.addEventListener("click", () => {
+    editAvaForm.reset();
+    openModal(popupEditProfileAva);
+    clearValidation(editAvaForm, validationConfig);
+  });
   
-  function handleFormSubmitAvatar(evt) {
+  function submitAvaForm(evt) {
     evt.preventDefault();
-    const avatarUrl = avatarInput.value;
     evt.submitter.textContent = "Сохранение...";
-    
-    editAvatarWithServer(avatarUrl)
-    .then((data) => {
-      avatarImage.style.backgroundImage = `url(${data.avatar})`;
-      
-      closeModal(avatarPopup);
-    })
-    .catch(console.error)
-    .finally(() => {
-      evt.submitter.textContent = "Сохранить";
-    });
+    editAvatarWithServer(avaFormInput.value)
+      .then((data) => {
+        avatarImage.style.backgroundImage = `url('${data.avatar}')`;
+        closeModal(popupEditProfileAva);
+      })
+      .catch((err) => {
+        console.error(`Ошибка: ${err}`);
+      })
+      .finally(() => {
+        evt.submitter.textContent = "Сохранить";
+      });
   }
   
-
-  function handleFormSubmitAdd(evt) {
-    evt.preventDefault();
-    
-    evt.submitter.textContent = "Сохранение...";
-  
-    createNewCardWithServer({ name: placeInput.value, link: photoInput.value })
+  buttonAdd.addEventListener("click", () => {
+    formNewPlace.reset();
+    openModal(popupNewCard);
+    clearValidation(formNewPlace, validationConfig);
+  });
+      
+    function handleFormSubmitAdd(evt) {
+      evt.preventDefault();
+      
+      evt.submitter.textContent = "Сохранение...";
+      
+      createNewCardWithServer({ name: placeInput.value, link: photoInput.value })
       .then((card) => {
         addNewCard(card, deleteCard, likeCard, userId);
-  
+        placeInput.value = "";
+        photoInput.value = "";
+        
         closeModal(popupNewCard);
       })
       .catch(console.error)
       .finally(() => {
         evt.submitter.textContent = "Сохранить";
       });
-  }
-
-  formEditProfile.addEventListener("submit", handleFormSubmitEdit);
-
-  formNewPlace.addEventListener("submit", handleFormSubmitAdd);
-
-  avatarForm.addEventListener("submit", handleFormSubmitAvatar);
-
-  buttonEdit.addEventListener("click", openEditPopup);
-
-  buttonAdd.addEventListener("click", openAddPopup);
-
-  openAvatarPopupButton.addEventListener("click", openAvatarPopup);
-
-  enableValidation(validationConfig);
-  setCloseModalByClickListeners(buttonsClosePopup);
-
-  
+    }
+    
+    formEditProfile.addEventListener("submit", handleFormSubmitEdit);
+    
+    formNewPlace.addEventListener("submit", handleFormSubmitAdd);
+    
+    editAvaForm.addEventListener("submit", submitAvaForm);
+    
+    buttonEdit.addEventListener("click", openEditPopup);
+    
+    buttonAdd.addEventListener("click", openAddPopup);
+        
+    enableValidation(validationConfig);
+    setCloseModalByClickListeners(buttonsClosePopup);
+    

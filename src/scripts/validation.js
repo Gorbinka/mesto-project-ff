@@ -24,7 +24,10 @@ const isValid = (formElement,inputElement,inputErrorClass,errorClass) => {
 	}
 
 	if(!inputElement.validity.valid) {
-		showInputError(formElement,inputElement,inputElement.validationMessage,inputErrorClass,errorClass);
+		showInputError(formElement,
+      inputElement,
+      inputElement.validationMessage,
+      validationConfig);
 	}
 	else {
 		hideInputError(formElement,inputElement,inputErrorClass,errorClass);
@@ -42,7 +45,7 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
     });
   });
   };
-//////////////////////////
+
   const enableValidation = (validationConfig) => {
 	const formList = Array.from(document.querySelectorAll(validationConfig.formSelector));
 	  formList.forEach((formElement) => {
@@ -57,16 +60,16 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
   const hasInvalidInput = (inputList) => {
 	return inputList.some((inputElement) => {
 		return !inputElement.validity.valid;
-		})
+		});
   };
 
-  const toggleButtonState = (inputList, buttonElement, inactiveButtonClass) => {
+  const toggleButtonState = (inputList, buttonElement, validationConfig) => {
 	if (hasInvalidInput(inputList)) {
 		buttonElement.disabled = true;
-		buttonElement.classList.add(inactiveButtonClass);
+		buttonElement.classList.add(validationConfig.inactiveButtonClass);
 	  } else {
 		buttonElement.disabled = false;
-		buttonElement.classList.remove(inactiveButtonClass);
+		buttonElement.classList.remove(validationConfig.inactiveButtonClass);
 	  }
   };
 
@@ -74,12 +77,14 @@ const setEventListeners = (formElement,inputSelector,inputErrorClass,errorClass,
 	const inputList = Array.from(formElement.querySelectorAll(validationConfig.inputSelector));
 	  const buttonElement = formElement.querySelector(validationConfig.submitButtonSelector);
 	  buttonElement.classList.add(validationConfig.inactiveButtonClass);
+	  buttonElement.disabled = true;
 
 	  inputList.forEach((inputElement) => {
 		hideInputError(formElement,inputElement,validationConfig.inputErrorClass,validationConfig.errorClass);
 		inputElement.setCustomValidity("");
 	  });
 
-	  buttonElement.disabled = true;
 	  buttonElement.classList.add(validationConfig.inactiveButtonClass);
   };
+
+ 

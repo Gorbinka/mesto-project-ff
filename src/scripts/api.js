@@ -87,7 +87,7 @@ export function editAvatarWithServer(avatarUrl) {
 		method: "PATCH",
 		headers: config.headers,
 		body: JSON.stringify({
-			avatar: avatarUrl
+			avatar: avatarUrl,
 		})
 	})
 	.then(checkResponse);
